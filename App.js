@@ -13,12 +13,19 @@ import {
 
 const { width, height } = Dimensions.get('screen');
 import { AntDesign } from '@expo/vector-icons';
+import ButtonAnimation from './screens/buttonAnimation';
+import DribbbleScreenOne from './screens/dribbbleScreenOne';
 
 import data from './data';
 
 export default function App() {
-  const scrollX = React.useRef(new Animated.Value(0)).current;
+  // return <Slider />;
+  // return <ButtonAnimation />;
+  return <DribbbleScreenOne />;
+}
 
+const Slider = ({ navigation }) => {
+  const scrollX = React.useRef(new Animated.Value(0)).current;
   return (
     <View style={styles.container}>
       <StatusBar style={'light'} />
@@ -166,8 +173,7 @@ export default function App() {
       />
     </View>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
