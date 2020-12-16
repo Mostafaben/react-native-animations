@@ -281,7 +281,7 @@ export default function Tinder({ navigation }) {
           },
         ]}
       >
-        <AntDesign name={'hea rt'} size={40} color={'red'} />
+        <AntDesign name={'heart'} size={40} color={'red'} />
       </Animated.View>
     </View>
   );
