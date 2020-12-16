@@ -56,3 +56,18 @@ export default data = [
   //   sellerName: faker.name.findName(),
   // },
 ];
+
+export const images = [
+  {
+    uri:
+      'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/artistic-album-cover-design-template-d12ef0296af80b58363dc0deef077ecc_screen.jpg?ts=1561488440',
+  },
+  {
+    uri:
+      'https://i.pinimg.com/originals/b4/75/00/b4750046d94fed05d00dd849aa5f0ab7.jpg',
+  },
+  {
+    uri:
+      'https://i.pinimg.com/originals/3a/f0/e5/3af0e55ea66ea69e35145fb108b4a636.jpg',
+  },
+];

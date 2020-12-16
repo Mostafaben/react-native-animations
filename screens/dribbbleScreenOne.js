@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Alert,
   View,
 } from 'react-native';
 
@@ -41,250 +42,269 @@ const DATA = [
   },
 ];
 
+import {
+  Directions,
+  FlingGestureHandler,
+  State,
+} from 'react-native-gesture-handler';
+
 export default function DribbbleScreenOne() {
   const [selectedTap, setSelectedTab] = useState(0);
-
   const scrollViewRef = useRef(null);
-
-  function changeTab(index) {
-    setSelectedTab(index);
-    scrollViewRef.current.scrollTo({ x: width * index, y: 0, animated: true });
-  }
   const sheetRef = useRef(null);
 
+  function changeTab(index) {
+    scrollViewRef.current.scrollTo({ x: width * index, y: 0, animated: true });
+  }
+
   return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor={'#<,2D2D2D'} />
-      <View style={styles.header}>
-        <View style={styles.headerTextContent}>
-          <Text
-            style={{
-              fontSize: 26,
-              color: 'white',
-              marginBottom: PADDING * 0.25,
+    <FlingGestureHandler
+      direction={Directions.UP}
+      onHandlerStateChange={({ nativeEvent }) => {
+        if (nativeEvent.state === State.END) {
+          sheetRef.current.snapTo(1);
+        }
+      }}
+    >
+      <View style={styles.container}>
+        <StatusBar backgroundColor={'#2D2D2D'} />
+        <View style={styles.header}>
+          <View style={styles.headerTextContent}>
+            <Text
+              style={{
+                fontSize: 26,
+                color: 'white',
+                marginBottom: PADDING * 0.25,
+              }}
+            >
+              Welcom Home
+            </Text>
+            <Text style={{ fontSize: 13, color: 'white' }}>
+              Benlagha Mostafa
+            </Text>
+          </View>
+          <Image
+            source={{
+              uri:
+                'https://avatars0.githubusercontent.com/u/32815384?s=400&u=56c99b2b8b06a0f4028064facca76dea46997a75&v=4',
             }}
-          >
-            Welcom Home
-          </Text>
-          <Text style={{ fontSize: 13, color: 'white' }}>Benlagha Mostafa</Text>
-        </View>
-        <Image
-          source={{
-            uri:
-              'https://avatars0.githubusercontent.com/u/32815384?s=400&u=56c99b2b8b06a0f4028064facca76dea46997a75&v=4',
-          }}
-          style={styles.headerImage}
-        />
-      </View>
-      <View style={styles.body}>
-        <View style={{ paddingLeft: PADDING }}>
-          <FlatList
-            showsHorizontalScrollIndicator={false}
-            style={{ marginTop: PADDING }}
-            horizontal
-            data={DATA}
-            renderItem={({ item, index }) => (
-              <TouchableScale
-                onPress={() => {
-                  changeTab(index);
-                }}
-                activeOpacity={0.8}
-              >
-                <View style={styles.tabItem}>
-                  <Text
-                    style={{
-                      color: selectedTap == index ? 'black' : '#888',
-                      fontWeight: selectedTap == index ? 'bold' : 'normal',
-                      fontSize: 16,
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                </View>
-              </TouchableScale>
-            )}
+            style={styles.headerImage}
           />
         </View>
-
-        <ScrollView
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          ref={scrollViewRef}
-          snapToInterval={width}
-          pagingEnabled
-        >
-          <ScrollView
-            style={{ width }}
-            showsVerticalScrollIndicator={false}
-            bounces
-          >
-            <View style={styles.tab}>
-              <View style={styles.tabCardContainer}>
-                <AntDesign name={'wifi'} size={36} />
-                <Text
-                  style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
+        <View style={styles.body}>
+          <View style={{ paddingLeft: PADDING }}>
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              style={{ marginTop: PADDING }}
+              horizontal
+              data={DATA}
+              renderItem={({ item, index }) => (
+                <TouchableScale
+                  onPress={() => {
+                    changeTab(index);
+                  }}
+                  activeOpacity={0.8}
                 >
-                  WI-FI
-                </Text>
-                <Text style={{ color: '#aaa' }}>4G LTE</Text>
-                <CheckBox />
-              </View>
-              <View style={styles.tabCardContainer}>
-                <Entypo name={'light-up'} size={36} />
-                <Text
-                  style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
-                >
-                  Light
-                </Text>
-                <Text style={{ color: '#aaa' }}>Whitenoise 7</Text>
-                <CheckBox />
-              </View>
-              <View style={styles.tabCardContainer}>
-                <AntDesign name={'printer'} size={36} />
-                <Text
-                  style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
-                >
-                  Printer
-                </Text>
-                <Text style={{ color: '#aaa' }}>HP 300</Text>
-                <CheckBox />
-              </View>
-              <View style={styles.tabCardContainer}>
-                <Feather name={'tv'} size={36} />
-                <Text
-                  style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
-                >
-                  TV
-                </Text>
-                <Text style={{ color: '#aaa' }}>Samsung </Text>
-                <CheckBox />
-              </View>
-              <View style={styles.tabCardContainer}>
-                <Feather name={'tv'} size={36} />
-                <Text
-                  style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
-                >
-                  TV
-                </Text>
-                <Text style={{ color: '#aaa' }}>Samsung </Text>
-                <CheckBox />
-              </View>
-              <View style={{ height: 100, width }} />
-            </View>
-          </ScrollView>
-          <ScrollView
-            style={{ width }}
-            showsVerticalScrollIndicator={false}
-            bounces
-          >
-            <View style={styles.tab}>
-              <View style={styles.tabCardContainer}>
-                <AntDesign name={'wifi'} size={36} />
-                <Text
-                  style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
-                >
-                  WI-FI
-                </Text>
-                <Text style={{ color: '#aaa' }}>4G LTE</Text>
-                <CheckBox />
-              </View>
-              <View style={styles.tabCardContainer}>
-                <Entypo name={'light-up'} size={36} />
-                <Text
-                  style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
-                >
-                  Light
-                </Text>
-                <Text style={{ color: '#aaa' }}>Whitenoise 7</Text>
-                <CheckBox />
-              </View>
-              <View style={styles.tabCardContainer}>
-                <AntDesign name={'printer'} size={36} />
-                <Text
-                  style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
-                >
-                  Printer
-                </Text>
-                <Text style={{ color: '#aaa' }}>HP 300</Text>
-                <CheckBox />
-              </View>
-              <View style={styles.tabCardContainer}>
-                <Feather name={'tv'} size={36} />
-                <Text
-                  style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
-                >
-                  TV
-                </Text>
-                <Text style={{ color: '#aaa' }}>Samsung </Text>
-                <CheckBox />
-              </View>
-              <View style={styles.tabCardContainer}>
-                <Feather name={'tv'} size={36} />
-                <Text
-                  style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
-                >
-                  TV
-                </Text>
-                <Text style={{ color: '#aaa' }}>Samsung </Text>
-                <CheckBox />
-              </View>
-              <View style={{ height: 100, width }} />
-            </View>
-          </ScrollView>
-        </ScrollView>
-        <BottomNavigation />
-      </View>
-
-      <TouchableScale
-        style={styles.cardContainer}
-        onPress={() => {
-          sheetRef.current.snapTo(1);
-        }}
-      >
-        <View style={styles.cardHeader}>
-          <View>
-            <Text style={{ fontSize: 18 }}>Queen</Text>
-            <Text style={{ color: '#aaa' }}>You Wanna rock</Text>
-          </View>
-          <View style={{ flexDirection: 'row' }}>
-            <AntDesign
-              name={'star'}
-              size={24}
-              color={'#FAEFA4'}
-              style={{ marginHorizontal: PADDING * 0.3 }}
+                  <View style={styles.tabItem}>
+                    <Text
+                      style={{
+                        color: selectedTap == index ? 'black' : '#888',
+                        fontWeight: selectedTap == index ? 'bold' : 'normal',
+                        fontSize: 16,
+                      }}
+                    >
+                      {item.name}
+                    </Text>
+                  </View>
+                </TouchableScale>
+              )}
             />
-            <Feather
-              name={'repeat'}
-              size={24}
-              color={'#FAEFA4'}
-              style={{ marginHorizontal: PADDING * 0.3 }}
-            />
-            <AntDesign name={'pause'} size={24} color={'#FAEFA4'} />
           </View>
-        </View>
-        <View style={styles.cardFooter}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginBottom: PADDING * 0.3,
-              marginTop: PADDING,
+
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            ref={scrollViewRef}
+            snapToInterval={width}
+            pagingEnabled
+            scrollEventThrottle={20}
+            onScroll={(e) => {
+              setSelectedTab(Math.round(e.nativeEvent.contentOffset.x / width));
             }}
           >
-            <Text style={{ color: '#aaa' }}>2:33</Text>
-            <Text style={{ color: '#aaa' }}>2:33</Text>
-          </View>
-          <ProgressBar progressBarwidth={width - 80} persentage={0.7} />
+            <ScrollView
+              style={{ width }}
+              showsVerticalScrollIndicator={false}
+              bounces
+            >
+              <View style={styles.tab}>
+                <View style={styles.tabCardContainer}>
+                  <AntDesign name={'wifi'} size={36} />
+                  <Text
+                    style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
+                  >
+                    WI-FI
+                  </Text>
+                  <Text style={{ color: '#aaa' }}>4G LTE</Text>
+                  <CheckBox />
+                </View>
+                <View style={styles.tabCardContainer}>
+                  <Entypo name={'light-up'} size={36} />
+                  <Text
+                    style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
+                  >
+                    Light
+                  </Text>
+                  <Text style={{ color: '#aaa' }}>Whitenoise 7</Text>
+                  <CheckBox />
+                </View>
+                <View style={styles.tabCardContainer}>
+                  <AntDesign name={'printer'} size={36} />
+                  <Text
+                    style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
+                  >
+                    Printer
+                  </Text>
+                  <Text style={{ color: '#aaa' }}>HP 300</Text>
+                  <CheckBox />
+                </View>
+                <View style={styles.tabCardContainer}>
+                  <Feather name={'tv'} size={36} />
+                  <Text
+                    style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
+                  >
+                    TV
+                  </Text>
+                  <Text style={{ color: '#aaa' }}>Samsung </Text>
+                  <CheckBox />
+                </View>
+                <View style={styles.tabCardContainer}>
+                  <Feather name={'tv'} size={36} />
+                  <Text
+                    style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
+                  >
+                    TV
+                  </Text>
+                  <Text style={{ color: '#aaa' }}>Samsung </Text>
+                  <CheckBox />
+                </View>
+                <View style={{ height: 100, width }} />
+              </View>
+            </ScrollView>
+            <ScrollView
+              style={{ width }}
+              showsVerticalScrollIndicator={false}
+              bounces
+            >
+              <View style={styles.tab}>
+                <View style={styles.tabCardContainer}>
+                  <AntDesign name={'wifi'} size={36} />
+                  <Text
+                    style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
+                  >
+                    WI-FI
+                  </Text>
+                  <Text style={{ color: '#aaa' }}>4G LTE</Text>
+                  <CheckBox />
+                </View>
+                <View style={styles.tabCardContainer}>
+                  <Entypo name={'light-up'} size={36} />
+                  <Text
+                    style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
+                  >
+                    Light
+                  </Text>
+                  <Text style={{ color: '#aaa' }}>Whitenoise 7</Text>
+                  <CheckBox />
+                </View>
+                <View style={styles.tabCardContainer}>
+                  <AntDesign name={'printer'} size={36} />
+                  <Text
+                    style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
+                  >
+                    Printer
+                  </Text>
+                  <Text style={{ color: '#aaa' }}>HP 300</Text>
+                  <CheckBox />
+                </View>
+                <View style={styles.tabCardContainer}>
+                  <Feather name={'tv'} size={36} />
+                  <Text
+                    style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
+                  >
+                    TV
+                  </Text>
+                  <Text style={{ color: '#aaa' }}>Samsung </Text>
+                  <CheckBox />
+                </View>
+                <View style={styles.tabCardContainer}>
+                  <Feather name={'tv'} size={36} />
+                  <Text
+                    style={{ fontSize: 18, color: 'black', marginVertical: 8 }}
+                  >
+                    TV
+                  </Text>
+                  <Text style={{ color: '#aaa' }}>Samsung </Text>
+                  <CheckBox />
+                </View>
+                <View style={{ height: 100, width }} />
+              </View>
+            </ScrollView>
+          </ScrollView>
+          <BottomNavigation />
         </View>
-      </TouchableScale>
-      <BottomSheet
-        ref={sheetRef}
-        initialSnap={0}
-        borderRadius={PADDING}
-        snapPoints={[0, width * 0.4 + PADDING * 2, width * 0.4 + PADDING * 2]}
-        renderContent={renderContent}
-      />
-    </View>
+
+        <TouchableScale
+          style={styles.cardContainer}
+          onPress={() => {
+            sheetRef.current.snapTo(1);
+          }}
+        >
+          <View style={styles.cardHeader}>
+            <View>
+              <Text style={{ fontSize: 18 }}>Queen</Text>
+              <Text style={{ color: '#aaa' }}>You Wanna rock</Text>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <AntDesign
+                name={'star'}
+                size={24}
+                color={'#FAEFA4'}
+                style={{ marginHorizontal: PADDING * 0.3 }}
+              />
+              <Feather
+                name={'repeat'}
+                size={24}
+                color={'#FAEFA4'}
+                style={{ marginHorizontal: PADDING * 0.3 }}
+              />
+              <AntDesign name={'pause'} size={24} color={'#FAEFA4'} />
+            </View>
+          </View>
+          <View style={styles.cardFooter}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginBottom: PADDING * 0.3,
+                marginTop: PADDING,
+              }}
+            >
+              <Text style={{ color: '#aaa' }}>2:33</Text>
+              <Text style={{ color: '#aaa' }}>2:33</Text>
+            </View>
+            <ProgressBar progressBarwidth={width - 80} persentage={0.7} />
+          </View>
+        </TouchableScale>
+        <BottomSheet
+          ref={sheetRef}
+          initialSnap={0}
+          borderRadius={PADDING}
+          snapPoints={[0, width * 0.4 + PADDING * 2, width * 0.4 + PADDING * 2]}
+          renderContent={renderContent}
+        />
+      </View>
+    </FlingGestureHandler>
   );
 }
 
@@ -535,7 +555,8 @@ const styles = StyleSheet.create({
     top: 0,
     width: width,
     paddingHorizontal: PADDING * 1.5,
-    height: 240,
+    height: 230,
+    zIndex: -1,
     backgroundColor: '#2D2D2D',
     flexDirection: 'row',
     alignItems: 'center',
@@ -553,7 +574,7 @@ const styles = StyleSheet.create({
     padding: PADDING,
     borderRadius: PADDING,
     position: 'absolute',
-    top: 180,
+    top: 160,
     alignSelf: 'center',
     width: width * 0.9,
     shadowOffset: {
@@ -565,8 +586,8 @@ const styles = StyleSheet.create({
     elevation: 7,
   },
   body: {
-    marginTop: 220,
-    paddingTop: 90,
+    marginTop: 210,
+    paddingTop: 80,
     backgroundColor: 'whitesmoke',
     width: width,
     flex: 1,
