@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
+  ActivityIndicator,
   Animated,
   Dimensions,
-  FlatList,
   Image,
   StyleSheet,
   Text,
@@ -13,16 +13,94 @@ import {
 
 const { width, height } = Dimensions.get('screen');
 import { AntDesign } from '@expo/vector-icons';
-import ButtonAnimation from './screens/buttonAnimation';
 import DribbbleScreenOne from './screens/dribbbleScreenOne';
-
+import 'react-native-gesture-handler';
+import DribbbleScreenTwo from './screens/DribbbleScreenTwo';
+import CText from './components/ui-components/custom_text';
 import data from './data';
+import ButtonAnimation from './screens/buttonAnimation';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Lato = {
+  Lato: require('./assets/fonts/Lato-Regular.ttf'),
+};
+
+import { useFonts } from 'expo-font';
+import {
+  Appearance,
+  AppearanceProvider,
+  useColorScheme,
+} from 'react-native-appearance';
+const Stack = createStackNavigator();
 
 export default function App() {
-  // return <Slider />;
-  // return <ButtonAnimation />;
-  return <DribbbleScreenOne />;
+  const options = { headerShown: false };
+
+  let [fontLoaded] = useFonts(Lato);
+  if (!fontLoaded)
+    return (
+      <View style={{ flexGrow: 1 }}>
+        <ActivityIndicator size={'large'} />
+      </View>
+    );
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName={'home'}>
+        <Stack.Screen name={'home'} component={NavigationPage} />
+        <Stack.Screen name={'slider'} component={Slider} options={options} />
+        <Stack.Screen
+          name={'screen1'}
+          component={DribbbleScreenOne}
+          options={options}
+        />
+        <Stack.Screen name={'screen2'} component={DribbbleScreenTwo} />
+        <Stack.Screen name={'buttonAnimation'} component={ButtonAnimation} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
+
+const pages = [
+  {
+    name: 'slider',
+  },
+  {
+    name: 'buttonAnimation',
+  },
+  {
+    name: 'screen1',
+  },
+  {
+    name: 'screen2',
+  },
+];
+
+const NavigationPage = ({ navigation }) => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        width,
+        height,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <StatusBar />
+      {pages.map((item) => (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate(item.name);
+          }}
+          key={item.name}
+        >
+          <CText style={{ fontSize: 20, padding: 10 }}>{item.name}</CText>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+};
 
 const Slider = ({ navigation }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -43,10 +121,6 @@ const Slider = ({ navigation }) => {
             (index + 0.5) * width,
           ],
           outputRange: [0, 1, 0],
-        });
-        const translateY = scrollX.interpolate({
-          inputRange,
-          outputRange: [30, 0, 30],
         });
         const translateX = scrollX.interpolate({
           inputRange,
