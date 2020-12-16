@@ -32,6 +32,7 @@ import {
   AppearanceProvider,
   useColorScheme,
 } from 'react-native-appearance';
+import Tinder from './screens/tinder';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -56,6 +57,7 @@ export default function App() {
         />
         <Stack.Screen name={'screen2'} component={DribbbleScreenTwo} />
         <Stack.Screen name={'buttonAnimation'} component={ButtonAnimation} />
+        <Stack.Screen name={'tinder'} component={Tinder} options={options} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -73,6 +75,9 @@ const pages = [
   },
   {
     name: 'screen2',
+  },
+  {
+    name: 'tinder',
   },
 ];
 
