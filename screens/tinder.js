@@ -1,15 +1,6 @@
-import { image } from 'faker';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import {
-  Alert,
-  Animated,
-  Dimensions,
-  Image,
-  StatusBar,
-  StyleSheet,
-  View,
-} from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { Animated, Dimensions, Image, StyleSheet, View } from 'react-native';
+
 const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width * 0.8;
 const ITEM_HEIGHT = ITEM_WIDTH;
