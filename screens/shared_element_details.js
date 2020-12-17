@@ -1,24 +1,33 @@
 import React from 'react';
-import { Dimensions, Image, StyleSheet, View } from 'react-native';
-import CText from '../components/ui-components/custom_text';
+import {
+  Animated,
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
 const { width, height } = Dimensions.get('screen');
-import faker from 'faker';
 import { SharedElement } from 'react-navigation-shared-element';
+import { listItems } from './../data';
+
 export default function SharedElementDetails({ navigation, route }) {
   const {
     params: { id },
   } = route;
 
+  const item = listItems.find((_) => _.id == id);
+
+  React.useEffect(() => {});
+
   return (
-    <View style={styles.container}>
+    <Animated.View style={styles.container}>
       <SharedElement id={`item.${id}.image`}>
-        <Image
-          source={{ uri: `https://picsum.photos/id/${id}/400` }}
-          style={styles.img}
-        ></Image>
+        <Image source={{ uri: item.image }} style={styles.img}></Image>
       </SharedElement>
-      <CText style={styles.name}>{faker.name.findName()}</CText>
-    </View>
+      <Text style={[styles.name]}>{item.name}</Text>
+    </Animated.View>
   );
 }
 

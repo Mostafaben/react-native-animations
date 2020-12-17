@@ -5,37 +5,33 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 const { width, height } = Dimensions.get('screen');
 import CText from './../components/ui-components/custom_text';
 import { SharedElement } from 'react-navigation-shared-element';
+import { listItems } from './../data';
 
 export default function SharedElementList({ navigation }) {
-  const randomDataList = new Array(10).fill(0);
-
   const openDetails = (id) => {
     navigation.navigate('shared_element_details', { id });
   };
-
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {randomDataList.map((_, index) => {
+        {listItems.map((item, index) => {
           return (
             <TouchableOpacity
               key={`item${index}`}
-              onPress={() => openDetails(index + 900)}
+              onPress={() => openDetails(item.id)}
               style={{ marginHorizontal: 10, marginBottom: 10 }}
             >
               <View style={styles.item}>
-                <SharedElement
-                  id={`item.${index + 900}.image`}
-                  style={styles.img}
-                >
+                <SharedElement id={`item.${item.id}.image`} style={styles.img}>
                   <Image
                     source={{
-                      uri: `https://picsum.photos/id/${index + 900}/400`,
+                      uri: item.image,
                     }}
-                    style={StyleSheet.absoluteFillObject}
+                    style={[StyleSheet.absoluteFillObject, { borderRadius: 5 }]}
                   />
                 </SharedElement>
-                <CText>{faker.name.findName()}</CText>
+
+                <CText>{item.name}</CText>
               </View>
             </TouchableOpacity>
           );

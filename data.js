@@ -71,3 +71,26 @@ export const images = [
       'https://i.pinimg.com/originals/3a/f0/e5/3af0e55ea66ea69e35145fb108b4a636.jpg',
   },
 ];
+
+export const listItems = [
+  {
+    image: 'https://picsum.photos/id/900/400',
+    id: 'item1',
+    name: 'mostafa benlagha',
+  },
+  {
+    image: 'https://picsum.photos/id/901/400',
+    id: 'item2',
+    name: 'tamani karim',
+  },
+  {
+    image: 'https://picsum.photos/id/902/400',
+    id: 'item3',
+    name: 'youcef saadi',
+  },
+  {
+    image: 'https://picsum.photos/id/903/400',
+    id: 'item4',
+    name: 'nadir belhadj',
+  },
+];

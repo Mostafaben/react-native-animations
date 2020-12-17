@@ -85,6 +85,7 @@ import {
   Directions,
 } from 'react-native-gesture-handler';
 import TouchableScale from 'react-native-touchable-scale';
+import CText from '../components/ui-components/custom_text';
 
 export default function Tinder({ navigation }) {
   const Like = useRef(new Animated.Value(0)).current;
@@ -281,8 +282,22 @@ export default function Tinder({ navigation }) {
           },
         ]}
       >
-        <AntDesign name={'heart'} size={40} color={'red'} />
+        <AntDesign name="heart" size={40} color="red" />
       </Animated.View>
+
+      <View
+        style={{
+          position: 'absolute',
+          justifyContent: 'center',
+          alignItems: 'center',
+          alignSelf: 'center',
+        }}
+      >
+        <MaterialCommunityIcons name="sticker-emoji" size={50} color="#888" />
+        <CText style={{ fontSize: 20, color: '#888', marginTop: 20 }}>
+          No more users
+        </CText>
+      </View>
     </View>
   );
 }

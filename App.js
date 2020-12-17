@@ -43,7 +43,27 @@ const Stack = createSharedElementStackNavigator();
 
 export default function App() {
   const options = { headerShown: false };
-
+  const sharedElementTranstionOptions = () => ({
+    transitionSpec: {
+      open: {
+        animation: 'timing',
+        config: {
+          duration: 300,
+        },
+      },
+      close: {
+        animation: 'timing',
+        config: {
+          duration: 300,
+        },
+      },
+    },
+    cardStyleInterpolator: ({ current: { progress } }) => ({
+      cardStyle: {
+        opacity: progress,
+      },
+    }),
+  });
   let [fontLoaded] = useFonts(Lato);
   if (!fontLoaded)
     return (
@@ -67,6 +87,7 @@ export default function App() {
         <Stack.Screen
           name={'shared_element_list'}
           component={SharedELementList}
+          options={sharedElementTranstionOptions}
         />
         <Stack.Screen
           name={'shared_element_details'}
@@ -75,8 +96,9 @@ export default function App() {
             const {
               params: { id },
             } = route;
-            return [`item.${id}.image`];
+            return [`item.${id}.image`, `item.${id}.name`];
           }}
+          options={sharedElementTranstionOptions}
         />
       </Stack.Navigator>
     </NavigationContainer>
