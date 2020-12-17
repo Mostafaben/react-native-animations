@@ -21,6 +21,10 @@ import data from './data';
 import ButtonAnimation from './screens/buttonAnimation';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import SharedELementList from './screens/shared_element_list';
+import SharedElementDetails from './screens/shared_element_details';
+
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 
 const Lato = {
   Lato: require('./assets/fonts/Lato-Regular.ttf'),
@@ -33,11 +37,33 @@ import {
   useColorScheme,
 } from 'react-native-appearance';
 import Tinder from './screens/tinder';
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
+
+const Stack = createSharedElementStackNavigator();
 
 export default function App() {
   const options = { headerShown: false };
-
+  const sharedElementTranstionOptions = () => ({
+    transitionSpec: {
+      open: {
+        animation: 'timing',
+        config: {
+          duration: 300,
+        },
+      },
+      close: {
+        animation: 'timing',
+        config: {
+          duration: 300,
+        },
+      },
+    },
+    cardStyleInterpolator: ({ current: { progress } }) => ({
+      cardStyle: {
+        opacity: progress,
+      },
+    }),
+  });
   let [fontLoaded] = useFonts(Lato);
   if (!fontLoaded)
     return (
@@ -58,6 +84,22 @@ export default function App() {
         <Stack.Screen name={'screen2'} component={DribbbleScreenTwo} />
         <Stack.Screen name={'buttonAnimation'} component={ButtonAnimation} />
         <Stack.Screen name={'tinder'} component={Tinder} options={options} />
+        <Stack.Screen
+          name={'shared_element_list'}
+          component={SharedELementList}
+          options={sharedElementTranstionOptions}
+        />
+        <Stack.Screen
+          name={'shared_element_details'}
+          component={SharedElementDetails}
+          sharedElementsConfig={(route, otherRoute, showing) => {
+            const {
+              params: { id },
+            } = route;
+            return [`item.${id}.image`, `item.${id}.name`];
+          }}
+          options={sharedElementTranstionOptions}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -78,6 +120,9 @@ const pages = [
   },
   {
     name: 'tinder',
+  },
+  {
+    name: 'shared_element_list',
   },
 ];
 
