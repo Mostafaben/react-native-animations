@@ -5,4 +5,4 @@ screens taken from dribbble
 
 ## Demo
 
-![react-native-image-header-scroll-view demo android](./readmeAssets/demoAndroid.gif)|![react-native-image-header-scroll-view demo ios](./readmeAssets/demoIos.gif)
+![ChatUI](./assets/images/me.png)|
