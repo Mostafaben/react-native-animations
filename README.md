@@ -5,4 +5,4 @@ screens taken from dribbble
 
 # Demo
 
-![ChatUI](./assets/images/me.png)|
+![ChatUI](./assets/20201218_194855.gif)
