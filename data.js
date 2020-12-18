@@ -2,7 +2,7 @@ const faker = require('faker');
 export default data = [
   {
     image: faker.random.image(),
-    avatar: 'https://picsum.photos/id/1005/400',
+    avatar: 'https://picsum.photos/id/900/400',
     desc: faker.commerce.productDescription(),
     name: faker.commerce.product(),
     price: faker.commerce.price(),
@@ -13,7 +13,7 @@ export default data = [
   },
   {
     image: faker.random.image(),
-    avatar: 'https://picsum.photos/id/0/400',
+    avatar: 'https://picsum.photos/id/901/400',
     desc: faker.commerce.productDescription().toString(),
     name: faker.commerce.product(),
     price: faker.commerce.price(),
@@ -24,7 +24,7 @@ export default data = [
   },
   {
     image: faker.random.image(),
-    avatar: 'https://picsum.photos/id/0/400',
+    avatar: 'https://picsum.photos/id/902/400',
     desc: faker.commerce.productDescription().toString(),
     name: faker.commerce.product(),
     price: faker.commerce.price(),
@@ -93,4 +93,37 @@ export const listItems = [
     id: 'item4',
     name: 'nadir belhadj',
   },
+  {
+    image: 'https://picsum.photos/id/903/400',
+    id: 'item5',
+    name: 'nadir belhadj',
+  },
+  {
+    image: 'https://picsum.photos/id/903/400',
+    id: 'item6',
+    name: 'nadir belhadj',
+  },
+  {
+    image: 'https://picsum.photos/id/903/400',
+    id: 'item7',
+    name: 'nadir belhadj',
+  },
+  {
+    image: 'https://picsum.photos/id/903/400',
+    id: 'item8',
+    name: 'nadir belhadj',
+  },
 ];
+
+export const messages = new Array(32).fill(0).map((_) => {
+  return {
+    txt: faker.lorem.sentence(),
+    isSent: faker.random.boolean(),
+    isImage: Math.random() * 1000 < 10,
+    time: faker.date.past(),
+  };
+});
+export const user = {
+  name: faker.name.findName(),
+  email: faker.internet.email(),
+};
