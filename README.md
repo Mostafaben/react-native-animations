@@ -1,8 +1,8 @@
 ﻿# react-native-animations
 screens taken from dribbble
 
-# i will refactor this later 🎵
+## i will refactor this later 🎵
 
-## Demo
+# Demo
 
 ![ChatUI](./assets/images/me.png)|
