@@ -11,6 +11,8 @@ import {
   View,
 } from 'react-native';
 
+import { Colors } from './ui-config/config';
+
 const { width, height } = Dimensions.get('screen');
 import { AntDesign } from '@expo/vector-icons';
 import DribbbleScreenOne from './screens/dribbbleScreenOne';
@@ -20,14 +22,14 @@ import CText from './components/ui-components/custom_text';
 import data from './data';
 import ButtonAnimation from './screens/buttonAnimation';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+// tackNavigator } from '@react-navigation/stack';
 import SharedELementList from './screens/shared_element_list';
 import SharedElementDetails from './screens/shared_element_details';
 
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 
-const Lato = {
-  Lato: require('./assets/fonts/Lato-Regular.ttf'),
+const adobeClean = {
+  adobeClean: require('./assets/fonts/AdobeClean-Regular.ttf'),
 };
 
 import { useFonts } from 'expo-font';
@@ -37,7 +39,10 @@ import {
   useColorScheme,
 } from 'react-native-appearance';
 import Tinder from './screens/tinder';
-// const Stack = createStackNavigator();
+//
+
+import ChatUI from './screens/chat_ui';
+import TouchableScale from 'react-native-touchable-scale';
 
 const Stack = createSharedElementStackNavigator();
 
@@ -64,7 +69,7 @@ export default function App() {
       },
     }),
   });
-  let [fontLoaded] = useFonts(Lato);
+  let [fontLoaded] = useFonts(adobeClean);
   if (!fontLoaded)
     return (
       <View style={{ flexGrow: 1 }}>
@@ -100,6 +105,52 @@ export default function App() {
           }}
           options={sharedElementTranstionOptions}
         />
+        <Stack.Screen
+          name="chat_ui"
+          component={ChatUI}
+          options={({
+            navigation,
+            route: {
+              params: { user },
+            },
+          }) => {
+            return {
+              cardStyleInterpolator: ({ current: { progress } }) => {
+                const translateX = progress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [width, 0],
+                });
+                return {
+                  cardStyle: {
+                    transform: [{ translateX }],
+                  },
+                };
+              },
+              headerStyle: {
+                backgroundColor: Colors.primary,
+                height: 100,
+              },
+              title: user,
+              headerTitleStyle: {
+                color: 'white',
+              },
+              headerLeft: () => {
+                return (
+                  <TouchableScale
+                    onPress={() => {
+                      navigation.goBack();
+                    }}
+                  >
+                    <View style={{ paddingHorizontal: 20 }}>
+                      <AntDesign name="back" size={20} color="white" />
+                    </View>
+                  </TouchableScale>
+                );
+              },
+              headerLeftContainerStyle: { color: 'white' },
+            };
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -124,6 +175,9 @@ const pages = [
   {
     name: 'shared_element_list',
   },
+  {
+    name: 'chat_ui',
+  },
 ];
 
 const NavigationPage = ({ navigation }) => {
@@ -141,7 +195,7 @@ const NavigationPage = ({ navigation }) => {
       {pages.map((item) => (
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate(item.name);
+            navigation.navigate(item.name, { user: 'Mostafa ben' });
           }}
           key={item.name}
         >
